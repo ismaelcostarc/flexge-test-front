@@ -1,12 +1,11 @@
 import { Card, Input, Form, Button } from "antd";
+import { Container } from "../../components/ui/Container";
 import messages from "../../locales/messages";
-import style from "./style.module.css";
 
 export const LoginPage = () => {
-
   return (
     <>
-      <div className={style.container}>
+      <Container>
         <Card title="Login" style={{ width: 300 }}>
           <Form
             labelCol={{ span: 8 }}
@@ -44,7 +43,7 @@ export const LoginPage = () => {
             </Form.Item>
           </Form>
         </Card>
-      </div>
+      </Container>
     </>
   );
 };

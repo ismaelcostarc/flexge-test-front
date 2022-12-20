@@ -2,7 +2,8 @@ import { Routes, Route } from "react-router-dom";
 import { LoginPage } from "./pages/Login";
 import { ContractPage } from "./pages/Contract";
 import { QueryPage } from "./pages/Query";
-import { ProtectedRoute } from "./components/ProtectedRoute";
+import { ErrorPage } from "./pages/Error";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import { AuthProvider } from "./contexts/auth";
 
 export default function App() {
@@ -18,7 +19,15 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/contract/:id" element={<ContractPage />} />
+        <Route
+          path="/contract/:id"
+          element={
+            <ProtectedRoute>
+              <ContractPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </AuthProvider>
   );
