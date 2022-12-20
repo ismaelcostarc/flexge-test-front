@@ -11,14 +11,7 @@ export default function App() {
     <AuthProvider>
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route
-          path="/query"
-          element={
-            <ProtectedRoute>
-              <QueryPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/query" element={<QueryPage />} />
         <Route
           path="/contract/:id"
           element={
