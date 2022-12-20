@@ -10,7 +10,7 @@ export default function App() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/query" element={<QueryPage />} />
         <Route
           path="/contract/:id"

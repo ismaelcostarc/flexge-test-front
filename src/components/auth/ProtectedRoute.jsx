@@ -6,7 +6,7 @@ export const ProtectedRoute = ({ children }) => {
   const { token } = useContext(AuthContext);
 
   if (!token) {
-    return <Navigate to="/" />;
+    return <Navigate to="/login" />;
   }
   return children;
 };
