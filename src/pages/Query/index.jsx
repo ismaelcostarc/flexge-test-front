@@ -1,5 +1,7 @@
 import { Row, Button, Form, Card, Table, Input, Space } from "antd";
 import { BaseLayout } from "../../components/layout/BaseLayout";
+import { PlusOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 export const QueryPage = () => {
   const [form] = Form.useForm();
@@ -10,12 +12,16 @@ export const QueryPage = () => {
 
   return (
     <>
-      <BaseLayout breadcrumbItems={['Home', 'Contracts']}>
+      <BaseLayout breadcrumbItems={["Home", "Contracts"]}>
         <Card
           title={
             <Row justify="space-between" align="middle">
               <div>Contracts</div>
-              <Button>New Contract</Button>
+              <Link to="/contract">
+                <Button>
+                  <PlusOutlined /> New Contract
+                </Button>
+              </Link>
             </Row>
           }
         >

@@ -12,14 +12,7 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
         <Route path="/query" element={<QueryPage />} />
-        <Route
-          path="/contract/:id"
-          element={
-            <ProtectedRoute>
-              <ContractPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/contract/:id?" element={<ContractPage />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </AuthProvider>
