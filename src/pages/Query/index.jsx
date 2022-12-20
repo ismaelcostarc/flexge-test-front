@@ -1,3 +1,3 @@
 export const QueryPage = () => {
-  return <>Query</>
-}
+  return <>Query</>;
+};
