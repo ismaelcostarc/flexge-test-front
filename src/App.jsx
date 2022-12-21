@@ -20,7 +20,14 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/contract/:id?" element={<ContractPage />} />
+        <Route
+          path="/contract/:id?"
+          element={
+            <ProtectedRoute>
+              <ContractPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </AuthProvider>

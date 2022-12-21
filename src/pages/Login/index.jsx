@@ -2,38 +2,56 @@ import { Card, Input, Form, Button, notification } from "antd";
 import { Container } from "../../components/ui/Container";
 import messages from "../../locales/messages";
 import { api } from "../../services/api";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import { AuthContext } from "../../contexts/auth";
 import { Navigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const [form] = useForm();
-  const { token, addToken } = useContext(AuthContext);
+  const { token, addToken, clearToken } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [userIsSigned, setUserIsSigned] = useState(false);
 
-  if (token) {
-    return <Navigate to="/query" />;
+  useEffect(() => {
+    const testToken = async () => {
+      if (token) {
+        try {
+          const response = await api.get("/user/isValid", {
+            headers: {
+              Authorization: `token ${token}`,
+            },
+          });
+          setUserIsSigned(true);
+        } catch (err) {
+          clearToken();
+        }
+      }
+    };
+
+    testToken();
+  });
+
+  if (userIsSigned) {
+    return <Navigate to="/query"/>
   }
 
   const login = async () => {
     try {
+      setLoading(true);
       const { data } = await api.post("/user/signin", {
         username: form.getFieldValue("username"),
         password: form.getFieldValue("password"),
       });
       addToken(data.token);
     } catch (err) {
+      setLoading(false);
       notification.error({
         message: "Error",
         description: err.response.statusText,
       });
     }
   };
-
-  // chamada para API
-  // loading
-  // error
-  // se sucesso, login para setar o token e redirecionar
 
   return (
     <>
@@ -68,8 +86,8 @@ export const LoginPage = () => {
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button type="primary" htmlType="submit" loading={loading}>
+                Login
               </Button>
             </Form.Item>
           </Form>
