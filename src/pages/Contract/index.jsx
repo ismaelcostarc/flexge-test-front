@@ -10,15 +10,19 @@ import {
   Col,
   DatePicker,
   Upload,
+  Typography,
 } from "antd";
 import {
   UploadOutlined,
   ArrowLeftOutlined,
   RedoOutlined,
   PlusOutlined,
+  HomeOutlined
 } from "@ant-design/icons";
 import { BaseLayout } from "../../components/layout/BaseLayout";
 import { Link } from "react-router-dom";
+
+const { Text } = Typography;
 
 export const ContractPage = () => {
   const [form] = Form.useForm();
@@ -47,7 +51,7 @@ export const ContractPage = () => {
 
   return (
     <>
-      <BaseLayout breadcrumbItems={["Home", "Create Contract"]}>
+      <BaseLayout breadcrumbItems={[<span><HomeOutlined /> Home</span>, "Create Contract"]}>
         <Space direction="vertical" style={{ width: "100%" }} size="small">
           <Card
             title={
@@ -169,7 +173,7 @@ export const ContractPage = () => {
                     colon={false}
                   >
                     <Upload {...uploadProps}>
-                      <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                      <Button icon={<UploadOutlined />}>Select a File</Button>
                     </Upload>
                   </Form.Item>
                 </Col>
@@ -191,43 +195,71 @@ export const ContractPage = () => {
           <Card title="Contract's Products">
             <Space direction="vertical" style={{ width: "100%" }} size="middle">
               <Form layout="inline">
-                <Row gutter={24}>
-                  <Col span={6}>
-                    <Form.Item label="Product">
-                      <Select></Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={3}>
-                    <Form.Item label="Amount">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={3}>
-                    <Form.Item label="Final Unit Price (R$)">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={3}>
-                    <Form.Item label="Installments">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={3}>
-                    <Form.Item label="Paid Installments">
-                      <Input />
-                    </Form.Item>
-                  </Col>
-                  <Col span={3}>
-                    <Form.Item label="Beginning of Term">
-                      <DatePicker />
-                    </Form.Item>
-                  </Col>
-                  <Col span={3}>
-                    <Form.Item>
-                      <Button>Add</Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
+                <Space
+                  direction="vertical"
+                  style={{ width: "100%" }}
+                  size="small"
+                >
+                  <Row gutter={24} style={{ width: "100%" }}>
+                    <Col span={6}>
+                      <Text>Product</Text>
+                    </Col>
+                    <Col span={3}>
+                      <Text>Amount</Text>
+                    </Col>
+                    <Col span={3}>
+                      <Text>Final Unit Price (R$)</Text>
+                    </Col>
+                    <Col span={3}>
+                      <Text>Installments</Text>
+                    </Col>
+                    <Col span={3}>
+                      <Text>Paid Installments</Text>
+                    </Col>
+                    <Col span={3}>
+                      <Text>Beginning of Term</Text>
+                    </Col>
+                    <Col span={3}></Col>
+                  </Row>
+
+                  <Row gutter={24} style={{ width: "100%" }}>
+                    <Col span={6}>
+                      <Form.Item name="product">
+                        <Select></Select>
+                      </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                      <Form.Item name="amount">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                      <Form.Item name="finalUnitPrice">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                      <Form.Item name="installments">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                      <Form.Item name="paidInstallments">
+                        <Input />
+                      </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                      <Form.Item name="beginningOfTerm">
+                        <DatePicker />
+                      </Form.Item>
+                    </Col>
+                    <Col span={3}>
+                      <Form.Item>
+                        <Button block><PlusOutlined /> Add</Button>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Space>
               </Form>
               <Table></Table>
             </Space>

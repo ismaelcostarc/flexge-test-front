@@ -1,6 +1,6 @@
-import { Row, Button, Form, Card, Table, Input, Space } from "antd";
+import { Row, Button, Form, Card, Table, Input, Space, Col } from "antd";
 import { BaseLayout } from "../../components/layout/BaseLayout";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, HomeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 export const QueryPage = () => {
@@ -12,7 +12,14 @@ export const QueryPage = () => {
 
   return (
     <>
-      <BaseLayout breadcrumbItems={["Home", "Contracts"]}>
+      <BaseLayout
+        breadcrumbItems={[
+          <span>
+            <HomeOutlined /> Home
+          </span>,
+          "Contracts",
+        ]}
+      >
         <Card
           title={
             <Row justify="space-between" align="middle">
@@ -32,24 +39,37 @@ export const QueryPage = () => {
               onFinish={onFinish}
               style={{ justifyContent: "space-between" }}
             >
-              <Form.Item
-                label="Document Number"
-                name="documentNumber"
-                colon={false}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="Social Reason"
-                name="socialReason"
-                colon={false}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item label="Company" name="company" colon={false}>
-                <Input />
-              </Form.Item>
-              <Button htmlType="submit">Search</Button>
+              <Space direction="vertical" style={{ width: "100%" }} size="small">
+                <Row style={{ width: "100%" }}>
+                  <Col span="4">Document Number</Col>
+                  <Col span="8">Social Reason</Col>
+                  <Col span="8">Company</Col>
+                  <Col span="4"></Col>
+                </Row>
+                <Row style={{ width: "100%" }}>
+                  <Col span="4">
+                    <Form.Item name="documentNumber" colon={false}>
+                      <Input />
+                    </Form.Item>
+                  </Col>
+
+                  <Col span="8">
+                    <Form.Item name="socialReason">
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span="8">
+                    <Form.Item name="company">
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span="4">
+                    <Button htmlType="submit" disabled>
+                      <SearchOutlined /> Search
+                    </Button>
+                  </Col>
+                </Row>
+              </Space>
             </Form>
 
             <Table></Table>
