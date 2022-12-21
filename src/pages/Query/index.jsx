@@ -40,7 +40,11 @@ export const QueryPage = () => {
               onFinish={onFinish}
               style={{ justifyContent: "space-between" }}
             >
-              <Space direction="vertical" style={{ width: "100%" }} size="small">
+              <Space
+                direction="vertical"
+                style={{ width: "100%" }}
+                size="small"
+              >
                 <Row style={{ width: "100%" }}>
                   <Col span="4">Document Number</Col>
                   <Col span="8">Social Reason</Col>

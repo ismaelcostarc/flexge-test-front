@@ -1,11 +1,11 @@
 import { Card, Input, Form, Button, notification } from "antd";
 import { Container } from "../../components/ui/Container";
-import messages from "../../locales/messages";
 import { api } from "../../services/api";
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import { AuthContext } from "../../contexts/auth";
 import { Navigate } from "react-router-dom";
+import messages from "../../locales/messages";
 
 export const LoginPage = () => {
   const [form] = useForm();
@@ -17,7 +17,7 @@ export const LoginPage = () => {
     const testToken = async () => {
       if (token) {
         try {
-          const response = await api.get("/user/isValid", {
+          await api.get("/user/isValid", {
             headers: {
               Authorization: `token ${token}`,
             },
@@ -30,10 +30,10 @@ export const LoginPage = () => {
     };
 
     testToken();
-  });
+  }, []);
 
   if (userIsSigned) {
-    return <Navigate to="/query"/>
+    return <Navigate to="/query" />;
   }
 
   const login = async () => {
