@@ -4,6 +4,7 @@ import { PlusOutlined, HomeOutlined, SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 export const QueryPage = () => {
+  // Redux Saga
   const [form] = Form.useForm();
 
   const onFinish = (value) => {

@@ -8,12 +8,12 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useLocalStorage("token", null);
   const navigate = useNavigate();
 
-  const login = async (data) => {
+  const addToken = async (data) => {
     setToken(data);
     navigate("/query");
   };
 
-  const logout = () => {
+  const clearToken = () => {
     setToken(null);
     navigate("/", { replace: true });
   };
@@ -21,8 +21,8 @@ export const AuthProvider = ({ children }) => {
   const value = useMemo(
     () => ({
       token,
-      login,
-      logout
+      addToken,
+      clearToken
     }),
     [token]
   );

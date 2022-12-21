@@ -25,6 +25,8 @@ import { Link } from "react-router-dom";
 const { Text } = Typography;
 
 export const ContractPage = () => {
+  // Redux Saga
+  // Components com estado interno
   const [form] = Form.useForm();
 
   const onFinish = (value) => {
