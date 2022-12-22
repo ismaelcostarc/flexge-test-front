@@ -1,12 +1,15 @@
-import { Row, Button, Card, Space } from "antd";
+import { Row, Button, Card, Space, Modal, Typography } from "antd";
 import { BaseLayout } from "../../components/layout/BaseLayout";
 import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { ContractList } from "./Components/ContractList";
 import { Search } from "./Components/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useContext, useState, useReducer } from "react";
-import { getContractsRequest } from "../../store/actions";
+import { useEffect, useContext, useState, useMemo } from "react";
+import {
+  getContractsRequest,
+  deleteContractRequest,
+} from "../../store/actions";
 import { AuthContext } from "../../contexts/auth";
 
 export const QueryPage = () => {
@@ -15,12 +18,16 @@ export const QueryPage = () => {
   const { token } = useContext(AuthContext);
   const [page, setPage] = useState(1);
   const [contracts, setContracts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contractToDelete, setContractToDelete] = useState(null);
+
+  const { Text } = Typography;
 
   useEffect(() => {
     dispatch(getContractsRequest(page, token));
   }, []);
 
-  useEffect(() => {
+  useMemo(() => {
     setContracts(
       contractsState.contracts.map((contract) => ({
         ...contract,
@@ -29,8 +36,20 @@ export const QueryPage = () => {
     );
   }, [contractsState]);
 
-  const editContract = (id) => {}
-  const removeContract = (id) => {}
+  const editContract = (id) => {};
+  const deleteContract = (id) => {
+    setContractToDelete(id);
+    setIsModalOpen(true);
+  };
+
+  const handleOk = async () => {
+    dispatch(deleteContractRequest(contracts[contractToDelete]._id, token));
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setContractToDelete(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <>
@@ -57,9 +76,21 @@ export const QueryPage = () => {
           <Space direction="vertical" style={{ width: "100%" }} size="large">
             <Search />
 
-            <ContractList contracts={contracts} setPage={setPage} editContract={editContract} removeContract={removeContract}/>
+            <ContractList
+              contracts={contracts}
+              setPage={setPage}
+              editContract={editContract}
+              deleteContract={deleteContract}
+            />
           </Space>
         </Card>
+
+        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <Text>
+            Do you want to delete the contract{" "}
+            {contracts[contractToDelete]?.documentNumber}?
+          </Text>
+        </Modal>
       </BaseLayout>
     </>
   );

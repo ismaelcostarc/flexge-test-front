@@ -3,9 +3,8 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 export const ContractList = ({
   contracts,
-  setPage,
   editContract,
-  removeContract,
+  deleteContract,
 }) => {
   const columns = [
     {
@@ -27,12 +26,12 @@ export const ContractList = ({
       title: "Actions",
       key: "actions",
       width: "10%",
-      render: (_, record) => (
+      render: (_, record, index) => (
         <Space size="middle">
-          <Button onClick={editContract(record._id)} type="text">
+          <Button onClick={() => editContract(index)} type="text">
             <EditOutlined />
           </Button>
-          <Button onClick={removeContract(record._id)} type="text">
+          <Button onClick={() => deleteContract(index)} type="text">
             <DeleteOutlined />
           </Button>
         </Space>

@@ -8,6 +8,14 @@ export function getContractsRequest(page, token) {
   };
 }
 
+export function deleteContractRequest(id, token) {
+  return {
+    type: types.DELETE_CONTRACT_REQUEST,
+    payload: id,
+    token
+  };
+}
+
 export function setContractsSuccess(contracts) {
   return {
     type: types.SET_CONTRACTS_SUCCESS,
