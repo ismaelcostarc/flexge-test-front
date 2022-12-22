@@ -1,32 +1,29 @@
-import * as types from "../../types";
+import * as types from "../../types/contracts";
 
 const initialState = {
-  user: {
-    avatar_url: "",
-    name: "",
-    message: ""
-  },
+  contracts: [],
+  page: 1,
   loading: false,
   error: "",
 };
 
-export const userReducer = (state = initialState, action) => {
+export const contractsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_USER_REQUEST:
+    case types.GET_CONTRACTS_REQUEST:
       return {
         ...state,
         loading: true,
-        user: action.payload,
+        page: action.payload,
         error: "",
       };
-    case types.GET_USER_SUCCESS:
+    case types.SET_CONTRACTS_SUCCESS:
       return {
         ...state,
         loading: false,
-        user: action.payload,
-        error: "", 
+        contracts: action.payload,
+        error: "",
       };
-    case types.GET_USER_FAILURE:
+    case types.SET_CONTRACTS_FAILURE:
       return {
         ...state,
         loading: false,
