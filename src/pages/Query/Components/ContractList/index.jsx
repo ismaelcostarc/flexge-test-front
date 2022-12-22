@@ -1,10 +1,12 @@
 import { Table, Space, Button } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { useEffect } from "react";
 
 export const ContractList = ({
   contracts,
   editContract,
   deleteContract,
+  loading
 }) => {
   const columns = [
     {
@@ -39,5 +41,5 @@ export const ContractList = ({
     },
   ];
 
-  return <Table columns={columns} dataSource={contracts} />;
+  return <Table columns={columns} dataSource={contracts} loading={loading}/>;
 };

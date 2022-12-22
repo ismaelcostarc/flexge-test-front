@@ -14,7 +14,8 @@ import { AuthContext } from "../../contexts/auth";
 
 export const QueryPage = () => {
   const dispatch = useDispatch();
-  const contractsState = useSelector((state) => state.contracts);
+  const contractsState = useSelector((state) => state.contracts.contracts);
+  const loadingContractsState = useSelector((state) => state.contracts.loading);
   const { token } = useContext(AuthContext);
   const [page, setPage] = useState(1);
   const [contracts, setContracts] = useState([]);
@@ -29,7 +30,7 @@ export const QueryPage = () => {
 
   useMemo(() => {
     setContracts(
-      contractsState.contracts.map((contract) => ({
+      contractsState.map((contract) => ({
         ...contract,
         key: contract._id,
       }))
@@ -81,6 +82,7 @@ export const QueryPage = () => {
               setPage={setPage}
               editContract={editContract}
               deleteContract={deleteContract}
+              loading={loadingContractsState}
             />
           </Space>
         </Card>
