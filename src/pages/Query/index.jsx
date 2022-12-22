@@ -1,28 +1,36 @@
-import { Row, Button, Form, Card, Space } from "antd";
+import { Row, Button, Card, Space } from "antd";
 import { BaseLayout } from "../../components/layout/BaseLayout";
 import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { ContractList } from "./Components/ContractList";
 import { Search } from "./Components/Search";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState, useReducer } from "react";
 import { getContractsRequest } from "../../store/actions";
 import { AuthContext } from "../../contexts/auth";
 
 export const QueryPage = () => {
-  // Redux Saga
-  const [form] = Form.useForm();
   const dispatch = useDispatch();
   const contractsState = useSelector((state) => state.contracts);
   const { token } = useContext(AuthContext);
+  const [page, setPage] = useState(1);
+  const [contracts, setContracts] = useState([]);
 
   useEffect(() => {
-    dispatch(getContractsRequest(1, token));
+    dispatch(getContractsRequest(page, token));
   }, []);
 
   useEffect(() => {
-    console.log(contractsState);
+    setContracts(
+      contractsState.contracts.map((contract) => ({
+        ...contract,
+        key: contract._id,
+      }))
+    );
   }, [contractsState]);
+
+  const editContract = (id) => {}
+  const removeContract = (id) => {}
 
   return (
     <>
@@ -49,7 +57,7 @@ export const QueryPage = () => {
           <Space direction="vertical" style={{ width: "100%" }} size="large">
             <Search />
 
-            <ContractList />
+            <ContractList contracts={contracts} setPage={setPage} editContract={editContract} removeContract={removeContract}/>
           </Space>
         </Card>
       </BaseLayout>
