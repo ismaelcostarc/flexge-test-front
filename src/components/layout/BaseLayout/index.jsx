@@ -1,4 +1,6 @@
 import { Layout, Button, Menu, Breadcrumb, Typography } from "antd";
+import { AuthContext } from "../../../contexts/auth";
+import { useContext } from "react";
 import {
   DashboardOutlined,
   ProfileOutlined,
@@ -19,6 +21,8 @@ const { Header, Content } = Layout;
 const { Text } = Typography;
 
 export const BaseLayout = ({ breadcrumbItems, children }) => {
+  const { clearToken } = useContext(AuthContext);
+
   const items = [
     {
       label: (
@@ -106,10 +110,13 @@ export const BaseLayout = ({ breadcrumbItems, children }) => {
     },
     {
       label: (
-        <Button>
+        <Button onClick={clearToken}>
           <PoweroffOutlined />
         </Button>
       ),
+      style: {
+        marginLeft: "auto",
+      },
     },
   ];
 
