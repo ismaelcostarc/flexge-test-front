@@ -2,8 +2,8 @@ import { Row, Button, Card, Space, Modal, Typography } from "antd";
 import { BaseLayout } from "../../components/layout/BaseLayout";
 import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { ContractList } from "./Components/ContractList";
-import { Search } from "./Components/Search";
+import { ContractList } from "./components/ContractList";
+import { Search } from "./components/Search";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useContext, useState, useMemo } from "react";
 import {
