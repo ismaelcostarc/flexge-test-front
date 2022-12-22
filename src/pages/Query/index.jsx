@@ -53,47 +53,45 @@ export const QueryPage = () => {
   };
 
   return (
-    <>
-      <BaseLayout
-        breadcrumbItems={[
-          <span>
-            <HomeOutlined /> Home
-          </span>,
-          "Contracts",
-        ]}
+    <BaseLayout
+      breadcrumbItems={[
+        <span>
+          <HomeOutlined /> Home
+        </span>,
+        "Contracts",
+      ]}
+    >
+      <Card
+        title={
+          <Row justify="space-between" align="middle">
+            <div>Contracts</div>
+            <Link to="/contract">
+              <Button>
+                <PlusOutlined /> New Contract
+              </Button>
+            </Link>
+          </Row>
+        }
       >
-        <Card
-          title={
-            <Row justify="space-between" align="middle">
-              <div>Contracts</div>
-              <Link to="/contract">
-                <Button>
-                  <PlusOutlined /> New Contract
-                </Button>
-              </Link>
-            </Row>
-          }
-        >
-          <Space direction="vertical" style={{ width: "100%" }} size="large">
-            <Search />
+        <Space direction="vertical" style={{ width: "100%" }} size="large">
+          <Search />
 
-            <ContractList
-              contracts={contracts}
-              setPage={setPage}
-              editContract={editContract}
-              deleteContract={deleteContract}
-              loading={loadingContractsState}
-            />
-          </Space>
-        </Card>
+          <ContractList
+            contracts={contracts}
+            setPage={setPage}
+            editContract={editContract}
+            deleteContract={deleteContract}
+            loading={loadingContractsState}
+          />
+        </Space>
+      </Card>
 
-        <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-          <Text>
-            Do you want to delete the contract{" "}
-            {contracts[contractToDelete]?.documentNumber}?
-          </Text>
-        </Modal>
-      </BaseLayout>
-    </>
+      <Modal open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Text>
+          Do you want to delete the contract{" "}
+          {contracts[contractToDelete]?.documentNumber}?
+        </Text>
+      </Modal>
+    </BaseLayout>
   );
 };

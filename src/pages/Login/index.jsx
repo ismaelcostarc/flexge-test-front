@@ -54,45 +54,43 @@ export const LoginPage = () => {
   };
 
   return (
-    <>
-      <Container>
-        <Card title="Login" style={{ width: 300 }}>
-          <Form
-            form={form}
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
-            onFinish={login}
-            autoComplete="off"
+    <Container>
+      <Card title="Login" style={{ width: 300 }}>
+        <Form
+          form={form}
+          labelCol={{ span: 8 }}
+          wrapperCol={{ span: 16 }}
+          initialValues={{ remember: true }}
+          onFinish={login}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Username"
+            name="username"
+            rules={[
+              { required: true, message: messages.login.required.username },
+            ]}
           >
-            <Form.Item
-              label="Username"
-              name="username"
-              rules={[
-                { required: true, message: messages.login.required.username },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <Input />
+          </Form.Item>
 
-            <Form.Item
-              label="Password"
-              name="password"
-              rules={[
-                { required: true, message: messages.login.required.password },
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              { required: true, message: messages.login.required.password },
+            ]}
+          >
+            <Input.Password />
+          </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit" loading={loading}>
-                Login
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
-      </Container>
-    </>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit" loading={loading}>
+              Login
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+    </Container>
   );
 };

@@ -31,10 +31,8 @@ export const CountrySelect = () => {
   }, []);
 
   return (
-    <>
-      <Form.Item label="Country" name="country" colon={false}>
-        <Select placeholder="Select..." options={options} />
-      </Form.Item>
-    </>
+    <Form.Item label="Country" name="country" colon={false}>
+      <Select placeholder="Select..." options={options} />
+    </Form.Item>
   );
 };
