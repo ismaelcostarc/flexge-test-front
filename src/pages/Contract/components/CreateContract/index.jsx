@@ -14,12 +14,18 @@ import { Link } from "react-router-dom";
 import { CountrySelect } from "./components/CountrySelect";
 import { StateSelect } from "./components/StateSelect";
 import { CompanySelect } from "./components/CompanySelect";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useForm } from "antd/es/form/Form";
 
 export const CreateContract = () => {
-  const [country, setCountry] = useState(null);
-  const [state, setState] = useState(null);
-  const [company, setCompany] = useState(null);
+  const [form] = useForm();
+  const [stateDisabled, setStateDisabled] = useState(true);
+
+  const onValuesChange = (value) => {
+    if ("country" in value) {
+      setStateDisabled(false);
+    }
+  };
 
   const uploadProps = {
     name: "file",
@@ -52,17 +58,13 @@ export const CreateContract = () => {
           </Row>
         }
       >
-        <Form>
+        <Form form={form} onValuesChange={onValuesChange}>
           <Row gutter={24}>
             <Col span={8}>
-              <Form.Item label="Country" name="country" colon={false}>
-                <CountrySelect setCountry={setCountry} />
-              </Form.Item>
+              <CountrySelect />
             </Col>
             <Col span={8}>
-              <Form.Item label="State" name="state" colon={false}>
-                <StateSelect setState={setState} />
-              </Form.Item>
+              <StateSelect disabled={stateDisabled} />
             </Col>
             <Col span={8}>
               <Form.Item label="City" name="city" colon={false}>
@@ -170,7 +172,7 @@ export const CreateContract = () => {
               span: 8,
             }}
           >
-            <CompanySelect setCompany={setCompany}/>
+            <CompanySelect />
           </Form.Item>
         </Form>
       </Card>
