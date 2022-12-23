@@ -1,11 +1,13 @@
-import { Row, Button, Form, Card, Space, Col, Typography } from "antd";
+import { Row, Button, Card, Space, Col } from "antd";
 import { RedoOutlined, PlusOutlined, HomeOutlined } from "@ant-design/icons";
-import { Link } from "react-router-dom";
 import { CreateContract } from "./components/CreateContract";
 import { ContractsProducts } from "./components/ContractsProducts";
 import { BaseLayout } from "../../components/layout/BaseLayout";
+import { useState } from "react";
 
 export const ContractPage = () => {
+  const [clearForm, setClearForm] = useState(false)
+
   return (
     <BaseLayout
       breadcrumbItems={[
@@ -16,15 +18,15 @@ export const ContractPage = () => {
       ]}
     >
       <Space direction="vertical" style={{ width: "100%" }} size="small">
-        <CreateContract />
+        <CreateContract clearForm={clearForm}/>
 
-        <ContractsProducts />
+        <ContractsProducts clearForm={clearForm}/>
 
         <Card>
           <Row justify="end">
             <Col>
               <Space>
-                <Button>
+                <Button onClick={() => setClearForm(!clearForm)}>
                   <RedoOutlined /> Discard Changes
                 </Button>
                 <Button>

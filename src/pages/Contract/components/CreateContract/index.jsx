@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
 
-export const CreateContract = () => {
+export const CreateContract = ({ clearForm }) => {
   const [form] = useForm();
   const [stateDisabled, setStateDisabled] = useState(true);
   const [countryId, setCountryId] = useState(null);
@@ -28,6 +28,12 @@ export const CreateContract = () => {
       setStateDisabled(false);
     }
   };
+
+  useEffect(() => {
+    form.resetFields();
+    setStateDisabled(true);
+    setCountryId(null);
+  }, [clearForm]);
 
   const uploadProps = {
     name: "file",
@@ -168,7 +174,7 @@ export const CreateContract = () => {
           </Col>
           <Col span={6}>
             <Form.Item label="Due day" name="dueDay" colon={false}>
-              <Select options={dueDays()}/>
+              <Select options={dueDays()} />
             </Form.Item>
           </Col>
           <Col span={3}>
@@ -180,16 +186,7 @@ export const CreateContract = () => {
           </Col>
         </Row>
 
-        <Form.Item
-          label="Select a company"
-          name="company"
-          colon={false}
-          wrapperCol={{
-            span: 8,
-          }}
-        >
-          <CompanySelect />
-        </Form.Item>
+        <CompanySelect />
       </Form>
     </Card>
   );
