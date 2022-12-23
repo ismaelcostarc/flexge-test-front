@@ -21,6 +21,7 @@ import dayjs from "dayjs";
 export const CreateContract = () => {
   const [form] = useForm();
   const [stateDisabled, setStateDisabled] = useState(true);
+  const [countryId, setCountryId] = useState(null)
 
   const onValuesChange = (value) => {
     if ("country" in value) {
@@ -61,10 +62,10 @@ export const CreateContract = () => {
       <Form form={form} onValuesChange={onValuesChange}>
         <Row gutter={24}>
           <Col span={8}>
-            <CountrySelect />
+            <CountrySelect setCountryId={setCountryId}/>
           </Col>
           <Col span={8}>
-            <StateSelect disabled={stateDisabled} />
+            <StateSelect disabled={stateDisabled} countryId={countryId}/>
           </Col>
           <Col span={8}>
             <Form.Item label="City" name="city" colon={false}>

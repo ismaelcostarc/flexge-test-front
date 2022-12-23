@@ -3,7 +3,7 @@ import { AuthContext } from "../../../../../../contexts/auth";
 import { useContext, useEffect, useState } from "react";
 import { api } from "../../../../../../services/api";
 
-export const CountrySelect = () => {
+export const CountrySelect = ({setCountryId}) => {
   const { token } = useContext(AuthContext);
   const [options, setOptions] = useState([]);
 
@@ -19,6 +19,7 @@ export const CountrySelect = () => {
           value: country.name,
           label: country.name,
           key: index,
+          id: country._id
         }));
 
         setOptions(countries);
@@ -32,7 +33,7 @@ export const CountrySelect = () => {
 
   return (
     <Form.Item label="Country" name="country" colon={false}>
-      <Select placeholder="Select..." options={options} />
+      <Select placeholder="Select..." options={options} onChange={(_, option) => setCountryId(option.id)}/>
     </Form.Item>
   );
 };
