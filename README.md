@@ -27,5 +27,11 @@ Versão do node utilizada: 18.4.0
 
 ```
 npm i
-npm start
+npm run dev
+```
+
+Login:
+```
+Usuário: usuario
+Senha: 12345678
 ```
