@@ -30,16 +30,23 @@ export const ContractsProducts = () => {
           beginningOfTerm: new Date(
             values.beginningOfTerm.format("YYYY-MM-DD")
           ),
-          key: products.length,
         }
-      : {
-          ...values,
-          key: products.length,
-        };
+      : values;
 
     setProducts([...products, newProduct]);
     form.resetFields();
   };
+
+  const dataSource = products.map((product, index) => ({
+    ...product,
+    key: index,
+    beginningOfTerm:
+      product.beginningOfTerm.getDate() +
+      "/" +
+      (product.beginningOfTerm.getMonth() + 1) +
+      "/" +
+      product.beginningOfTerm.getFullYear(),
+  }));
 
   const onValuesChange = (_, allValues) => {
     const enable =
@@ -52,6 +59,9 @@ export const ContractsProducts = () => {
 
     setEnableButton(enable);
   };
+
+  const deleteProduct = (productToDeleteIndex) =>
+    setProducts(products.filter((_, index) => index !== productToDeleteIndex));
 
   const columns = [
     { title: "Product", dataIndex: "product", key: "product" },
@@ -78,10 +88,7 @@ export const ContractsProducts = () => {
       width: "10%",
       render: (_, record, index) => (
         <Space size="middle">
-          <Button onClick={() => {}} type="text">
-            <EditOutlined />
-          </Button>
-          <Button onClick={() => {}} type="text">
+          <Button onClick={() => deleteProduct(index)} type="text">
             <DeleteOutlined />
           </Button>
         </Space>
@@ -163,7 +170,7 @@ export const ContractsProducts = () => {
             </Row>
           </Space>
         </Form>
-        <Table columns={columns} dataSource={products}></Table>
+        <Table columns={columns} dataSource={dataSource} pagination={false}></Table>
       </Space>
     </Card>
   );
