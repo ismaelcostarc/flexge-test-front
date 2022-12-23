@@ -21,6 +21,7 @@ const { Text } = Typography;
 export const ContractsProducts = () => {
   const [products, setProducts] = useState([]);
   const [form] = useForm();
+  const [enableButton, setEnableButton] = useState(false);
 
   const addProduct = (values) => {
     const newProduct = values.beginningOfTerm
@@ -38,6 +39,18 @@ export const ContractsProducts = () => {
 
     setProducts([...products, newProduct]);
     form.resetFields();
+  };
+
+  const onValuesChange = (_, allValues) => {
+    const enable =
+      allValues.product ||
+      allValues.amount ||
+      allValues.finalUnitPrice ||
+      allValues.installments ||
+      allValues.paidInstallments ||
+      allValues.beginningOfTerm;
+
+    setEnableButton(enable);
   };
 
   const columns = [
@@ -79,7 +92,12 @@ export const ContractsProducts = () => {
   return (
     <Card title="Contract's Products">
       <Space direction="vertical" style={{ width: "100%" }} size="middle">
-        <Form layout="inline" onFinish={addProduct} form={form}>
+        <Form
+          layout="inline"
+          onFinish={addProduct}
+          form={form}
+          onValuesChange={onValuesChange}
+        >
           <Space direction="vertical" style={{ width: "100%" }} size="small">
             <Row gutter={24} style={{ width: "100%" }}>
               <Col span={6}>
@@ -137,7 +155,7 @@ export const ContractsProducts = () => {
               </Col>
               <Col span={3}>
                 <Form.Item>
-                  <Button block htmlType="submit">
+                  <Button block htmlType="submit" disabled={!enableButton}>
                     <PlusOutlined /> Add
                   </Button>
                 </Form.Item>
