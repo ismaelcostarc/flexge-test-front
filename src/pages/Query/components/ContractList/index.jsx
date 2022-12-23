@@ -30,7 +30,7 @@ export const ContractList = ({
       width: "10%",
       render: (_, record, index) => (
         <Space size="middle">
-          <Button onClick={() => editContract(index)} type="text">
+          <Button onClick={() => editContract(index)} type="text" disabled>
             <EditOutlined />
           </Button>
           <Button onClick={() => deleteContract(index)} type="text">

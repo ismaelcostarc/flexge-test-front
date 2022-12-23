@@ -108,6 +108,9 @@ export const ContractsProducts = ({ setProductList, clearForm }) => {
       width: "10%",
       render: (_, record, index) => (
         <Space size="middle">
+          <Button onClick={() => {}} type="text" disabled>
+            <EditOutlined />
+          </Button>
           <Button onClick={() => deleteProduct(index)} type="text">
             <DeleteOutlined />
           </Button>
