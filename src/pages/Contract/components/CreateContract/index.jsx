@@ -21,7 +21,7 @@ import dayjs from "dayjs";
 export const CreateContract = () => {
   const [form] = useForm();
   const [stateDisabled, setStateDisabled] = useState(true);
-  const [countryId, setCountryId] = useState(null)
+  const [countryId, setCountryId] = useState(null);
 
   const onValuesChange = (value) => {
     if ("country" in value) {
@@ -46,6 +46,19 @@ export const CreateContract = () => {
       }
     },
   };
+
+  const dueDays = () => {
+    const arr = [...Array(30).keys()];
+
+    return arr.map((_, index) => ({
+      label: index + 1,
+      key: index + 1,
+      value: index + 1,
+    }));
+  };
+
+  dueDays();
+
   return (
     <Card
       title={
@@ -62,10 +75,10 @@ export const CreateContract = () => {
       <Form form={form} onValuesChange={onValuesChange}>
         <Row gutter={24}>
           <Col span={8}>
-            <CountrySelect setCountryId={setCountryId}/>
+            <CountrySelect setCountryId={setCountryId} />
           </Col>
           <Col span={8}>
-            <StateSelect disabled={stateDisabled} countryId={countryId}/>
+            <StateSelect disabled={stateDisabled} countryId={countryId} />
           </Col>
           <Col span={8}>
             <Form.Item label="City" name="city" colon={false}>
@@ -155,7 +168,7 @@ export const CreateContract = () => {
           </Col>
           <Col span={6}>
             <Form.Item label="Due day" name="dueDay" colon={false}>
-              <Select></Select>
+              <Select options={dueDays()}/>
             </Form.Item>
           </Col>
           <Col span={3}>
