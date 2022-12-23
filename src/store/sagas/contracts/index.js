@@ -7,13 +7,22 @@ let apiResponse;
 
 const contractsRequest = async (page, token) => {
   try {
-    const { data } = await api.get(`contract?page=${page}&pageSize=10`, {
+    const contractsResponse = await api.get(`contract?page=${page}&pageSize=10`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
     });
 
-    apiResponse = data;
+    const pagesResponse = await api.get(`pages?pageSize=10`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+
+    apiResponse = {
+      pages: pagesResponse.data,
+      list: contractsResponse.data
+    };
 
     return true;
   } catch (error) {

@@ -1,4 +1,4 @@
-import { Row, Button, Card, Space, Modal, Typography } from "antd";
+import { Row, Button, Card, Space, Modal, Typography, Pagination } from "antd";
 import { BaseLayout } from "../../components/layout/BaseLayout";
 import { PlusOutlined, HomeOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -18,6 +18,7 @@ export const QueryPage = () => {
   const loadingContractsState = useSelector((state) => state.contracts.loading);
   const { token } = useContext(AuthContext);
   const [page, setPage] = useState(1);
+  const [numberOfPages, setNumberOfPages] = useState(1);
   const [contracts, setContracts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [contractToDelete, setContractToDelete] = useState(null);
@@ -26,18 +27,22 @@ export const QueryPage = () => {
 
   useEffect(() => {
     dispatch(getContractsRequest(page, token));
-  }, []);
+  }, [page]);
 
   useMemo(() => {
-    setContracts(
-      contractsState.map((contract) => ({
-        ...contract,
-        key: contract._id,
-      }))
-    );
+    if (contractsState.list) {
+      setContracts(
+        contractsState.list.map((contract) => ({
+          ...contract,
+          key: contract._id,
+        }))
+      );
+      setNumberOfPages(contractsState.pages);
+    }
   }, [contractsState]);
 
   const editContract = (id) => {};
+  
   const deleteContract = (id) => {
     setContractToDelete(id);
     setIsModalOpen(true);
@@ -47,10 +52,15 @@ export const QueryPage = () => {
     dispatch(deleteContractRequest(contracts[contractToDelete]._id, token));
     setIsModalOpen(false);
   };
+
   const handleCancel = () => {
     setContractToDelete(null);
     setIsModalOpen(false);
   };
+
+  const onChangePagination = (value) => {
+    setPage(value)
+  }
 
   return (
     <BaseLayout
@@ -78,11 +88,12 @@ export const QueryPage = () => {
 
           <ContractList
             contracts={contracts}
-            setPage={setPage}
             editContract={editContract}
             deleteContract={deleteContract}
             loading={loadingContractsState}
           />
+
+          <Pagination defaultCurrent={1} total={numberOfPages * 10} onChange={onChangePagination}/>
         </Space>
       </Card>
 

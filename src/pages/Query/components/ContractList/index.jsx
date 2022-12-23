@@ -41,5 +41,5 @@ export const ContractList = ({
     },
   ];
 
-  return <Table columns={columns} dataSource={contracts} loading={loading}/>;
+  return <Table columns={columns} dataSource={contracts} loading={loading} pagination={false}/>;
 };
