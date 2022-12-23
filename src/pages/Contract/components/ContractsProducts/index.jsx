@@ -12,16 +12,21 @@ import {
 } from "antd";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ProductSelect } from "./components/ProductSelect";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
 
 const { Text } = Typography;
 
-export const ContractsProducts = () => {
+export const ContractsProducts = ({getForm, clearForm}) => {
   const [products, setProducts] = useState([]);
   const [form] = useForm();
   const [enableButton, setEnableButton] = useState(false);
+
+  useEffect(() => {
+    form.resetFields()
+    setProducts([])
+  }, [clearForm])
 
   const addProduct = (values) => {
     const newProduct = values.beginningOfTerm
@@ -34,19 +39,30 @@ export const ContractsProducts = () => {
       : values;
 
     setProducts([...products, newProduct]);
+    setEnableButton(false);
     form.resetFields();
   };
 
-  const dataSource = products.map((product, index) => ({
-    ...product,
-    key: index,
-    beginningOfTerm:
-      product.beginningOfTerm.getDate() +
-      "/" +
-      (product.beginningOfTerm.getMonth() + 1) +
-      "/" +
-      product.beginningOfTerm.getFullYear(),
-  }));
+  const dataSource = products.map((product, index) => {
+    const data = {
+      ...product,
+      key: index,
+    };
+
+    if (product.beginningOfTerm) {
+      return {
+        ...data,
+        beginningOfTerm:
+          product.beginningOfTerm.getDate() +
+          "/" +
+          (product.beginningOfTerm.getMonth() + 1) +
+          "/" +
+          product.beginningOfTerm.getFullYear(),
+      };
+    }
+
+    return data;
+  });
 
   const onValuesChange = (_, allValues) => {
     const enable =
@@ -170,7 +186,11 @@ export const ContractsProducts = () => {
             </Row>
           </Space>
         </Form>
-        <Table columns={columns} dataSource={dataSource} pagination={false}></Table>
+        <Table
+          columns={columns}
+          dataSource={dataSource}
+          pagination={false}
+        ></Table>
       </Space>
     </Card>
   );
