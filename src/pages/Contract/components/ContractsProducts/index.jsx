@@ -9,6 +9,7 @@ import {
   Col,
   DatePicker,
   Typography,
+  InputNumber,
 } from "antd";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ProductSelect } from "./components/ProductSelect";
@@ -18,23 +19,25 @@ import dayjs from "dayjs";
 
 const { Text } = Typography;
 
-export const ContractsProducts = ({getForm, clearForm}) => {
+export const ContractsProducts = ({ setProductList, clearForm }) => {
   const [products, setProducts] = useState([]);
   const [form] = useForm();
   const [enableButton, setEnableButton] = useState(false);
 
   useEffect(() => {
-    form.resetFields()
-    setProducts([])
-  }, [clearForm])
+    form.resetFields();
+    setProducts([]);
+  }, [clearForm]);
+
+  useEffect(() => {
+    setProductList(products);
+  }, [products]);
 
   const addProduct = (values) => {
     const newProduct = values.beginningOfTerm
       ? {
           ...values,
-          beginningOfTerm: new Date(
-            values.beginningOfTerm.format("YYYY-MM-DD")
-          ),
+          beginningOfTerm: values.beginningOfTerm.toString(),
         }
       : values;
 
@@ -50,14 +53,15 @@ export const ContractsProducts = ({getForm, clearForm}) => {
     };
 
     if (product.beginningOfTerm) {
+      const date = new Date(product.beginningOfTerm);
       return {
         ...data,
         beginningOfTerm:
-          product.beginningOfTerm.getDate() +
+          date.getDate() +
           "/" +
-          (product.beginningOfTerm.getMonth() + 1) +
+          (date.getMonth() + 1) +
           "/" +
-          product.beginningOfTerm.getFullYear(),
+          date.getFullYear(),
       };
     }
 
@@ -66,7 +70,7 @@ export const ContractsProducts = ({getForm, clearForm}) => {
 
   const onValuesChange = (_, allValues) => {
     const enable =
-      allValues.product ||
+      allValues.name ||
       allValues.amount ||
       allValues.finalUnitPrice ||
       allValues.installments ||
@@ -80,7 +84,7 @@ export const ContractsProducts = ({getForm, clearForm}) => {
     setProducts(products.filter((_, index) => index !== productToDeleteIndex));
 
   const columns = [
-    { title: "Product", dataIndex: "product", key: "product" },
+    { title: "Product", dataIndex: "name", key: "name" },
     { title: "Amount", dataIndex: "amount", key: "amount" },
     {
       title: "Final Unit Price",
@@ -124,7 +128,7 @@ export const ContractsProducts = ({getForm, clearForm}) => {
           <Space direction="vertical" style={{ width: "100%" }} size="small">
             <Row gutter={24} style={{ width: "100%" }}>
               <Col span={6}>
-                <Text>Product</Text>
+                <Text>* Product</Text>
               </Col>
               <Col span={3}>
                 <Text>Amount</Text>
@@ -150,22 +154,38 @@ export const ContractsProducts = ({getForm, clearForm}) => {
               </Col>
               <Col span={3}>
                 <Form.Item name="amount">
-                  <Input />
+                  <InputNumber
+                    style={{
+                      width: "100%",
+                    }}
+                  />
                 </Form.Item>
               </Col>
               <Col span={3}>
                 <Form.Item name="finalUnitPrice">
-                  <Input />
+                  <InputNumber
+                    style={{
+                      width: "100%",
+                    }}
+                  />
                 </Form.Item>
               </Col>
               <Col span={3}>
                 <Form.Item name="installments">
-                  <Input />
+                  <InputNumber
+                    style={{
+                      width: "100%",
+                    }}
+                  />
                 </Form.Item>
               </Col>
               <Col span={3}>
                 <Form.Item name="paidInstallments">
-                  <Input />
+                  <InputNumber
+                    style={{
+                      width: "100%",
+                    }}
+                  />
                 </Form.Item>
               </Col>
               <Col span={3}>

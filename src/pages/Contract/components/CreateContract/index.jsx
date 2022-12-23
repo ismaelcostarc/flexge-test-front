@@ -8,6 +8,7 @@ import {
   Col,
   DatePicker,
   Upload,
+  InputNumber,
 } from "antd";
 import { UploadOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -18,17 +19,17 @@ import { useEffect, useState } from "react";
 import { useForm } from "antd/es/form/Form";
 import dayjs from "dayjs";
 
-export const CreateContract = ({ clearForm }) => {
+export const CreateContract = ({ setData, clearForm }) => {
   const [form] = useForm();
   const [stateDisabled, setStateDisabled] = useState(true);
   const [countryId, setCountryId] = useState(null);
 
-  const onValuesChange = (value) => {
+  const onValuesChange = (value, allValues) => {
     if ("country" in value) {
       setStateDisabled(false);
     }
 
-
+    setData(allValues);
   };
 
   const dueDays = () => {
@@ -42,8 +43,8 @@ export const CreateContract = ({ clearForm }) => {
   };
 
   useEffect(() => {
-    form.resetFields()
-  }, [clearForm])
+    form.resetFields();
+  }, [clearForm]);
 
   return (
     <Card
@@ -76,53 +77,69 @@ export const CreateContract = ({ clearForm }) => {
         <Row gutter={24}>
           <Col span={8}>
             <Form.Item
-              label="Document Number"
+              label="* Document Number"
               name="documentNumber"
+              colon={false}
+            >
+              <InputNumber
+                style={{
+                  width: "100%",
+                }}
+              />
+            </Form.Item>
+          </Col>
+
+          <Col span={16}>
+            <Form.Item
+              label="* Social Reason"
+              name="socialReason"
               colon={false}
             >
               <Input />
             </Form.Item>
           </Col>
+        </Row>
 
-          <Col span={16}>
-            <Form.Item label="Social Reason" name="socialReason" colon={false}>
+        <Row gutter={24}>
+          <Col span={8}>
+            <Form.Item label="* Address" name="address" colon={false}>
               <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="* District" name="district" colon={false}>
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item label="* Number" name="number" colon={false}>
+              <InputNumber
+                style={{
+                  width: "100%",
+                }}
+              />
             </Form.Item>
           </Col>
         </Row>
 
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item label="Address" name="address" colon={false}>
+            <Form.Item label="* Zip code" name="zipCode" colon={false}>
               <Input />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item label="District" name="district" colon={false}>
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Number" name="number" colon={false}>
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-
-        <Row gutter={24}>
-          <Col span={8}>
-            <Form.Item label="Zip code" name="zipCode" colon={false}>
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item label="Email" name="email" colon={false}>
+            <Form.Item label="* Email" name="email" colon={false}>
               <Input />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item label="Phone" name="phone" colon={false}>
-              <Input />
+              <InputNumber
+                style={{
+                  width: "100%",
+                }}
+              />
             </Form.Item>
           </Col>
         </Row>
@@ -130,8 +147,8 @@ export const CreateContract = ({ clearForm }) => {
         <Row gutter={24}>
           <Col span={6}>
             <Form.Item
-              label="Contracts starts in"
-              name="contractsStartsIn"
+              label="* Contracts starts in"
+              name="startsIn"
               colon={false}
             >
               <DatePicker
@@ -141,11 +158,7 @@ export const CreateContract = ({ clearForm }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item
-              label="Contracts Ends In"
-              name="contractsEndsIn"
-              colon={false}
-            >
+            <Form.Item label="Contracts Ends In" name="endsIn" colon={false}>
               <DatePicker
                 initialValues={dayjs("01/01/2015", "DD/MM/YYYY")}
                 format={["DD/MM/YYYY", "DD/MM/YY"]}
@@ -153,17 +166,10 @@ export const CreateContract = ({ clearForm }) => {
             </Form.Item>
           </Col>
           <Col span={6}>
-            <Form.Item label="Due day" name="dueDay" colon={false}>
+            <Form.Item label="* Due day" name="dueDay" colon={false}>
               <Select options={dueDays()} />
             </Form.Item>
           </Col>
-{/*           <Col span={3}>
-            <Form.Item label="Upload the contract" name="file" colon={false}>
-              <Upload {...uploadProps}>
-                <Button icon={<UploadOutlined />}>Select a File</Button>
-              </Upload>
-            </Form.Item>
-          </Col> */}
         </Row>
 
         <CompanySelect />

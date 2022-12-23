@@ -32,7 +32,7 @@ export const ProductSelect = () => {
   }, []);
 
   return (
-    <Form.Item name="product" colon={false}>
+    <Form.Item name="name" colon={false}>
       <Select placeholder="Select..." options={options} />
     </Form.Item>
   );

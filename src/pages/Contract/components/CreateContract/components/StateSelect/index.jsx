@@ -33,7 +33,7 @@ export const StateSelect = ({ disabled, countryId }) => {
   }, [countryId]);
 
   return (
-    <Form.Item label="State" name="state" colon={false}>
+    <Form.Item label="* State" name="state" colon={false}>
       <Select disabled={disabled} options={options}></Select>
     </Form.Item>
   );
