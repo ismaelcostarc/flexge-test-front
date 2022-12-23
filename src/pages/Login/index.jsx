@@ -46,10 +46,17 @@ export const LoginPage = () => {
       addToken(data.token);
     } catch (err) {
       setLoading(false);
-      notification.error({
-        message: "Error",
-        description: err.response.statusText,
-      });
+      if(err.response) {
+        notification.error({
+          message: "Error",
+          description: err.response.statusText,
+        });
+      } else {
+        notification.error({
+          message: "Error",
+          description: err.message,
+        });
+      }
     }
   };
 
